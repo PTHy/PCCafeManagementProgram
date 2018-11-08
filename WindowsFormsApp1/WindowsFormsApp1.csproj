@@ -86,6 +86,12 @@
     <Compile Include="Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Ststistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ststistics.Designer.cs">
+      <DependentUpon>Ststistics.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Loading.resx">
       <DependentUpon>Loading.cs</DependentUpon>
     </EmbeddedResource>
@@ -110,6 +116,9 @@
     </Compile>
     <EmbeddedResource Include="Seat.resx">
       <DependentUpon>Seat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ststistics.resx">
+      <DependentUpon>Ststistics.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

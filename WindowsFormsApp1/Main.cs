@@ -25,7 +25,7 @@ namespace WindowsFormsApp1
         const float TABLE_CELL_WIDTH = (float)100 / MAX_TABLE_WIDTH;
         const float TABLE_CELL_HEIGHT = (float)100 / MAX_TABLE_HEIGHT;
         const int MAX_SEAT_ORDER_SIZE = 4;
-        const string imagePath = "D:\\Dev\\C#\\WindowsFormsApp1\\resources\\image\\";
+        const string imagePath = "D:\\Dev\\C#\\PCCafeManagementProgram\\resources\\image\\";
         string query;
         MySqlConnection scon = null;
         MySqlCommand scom = null;
@@ -52,22 +52,21 @@ namespace WindowsFormsApp1
        
         private void Main_Load(object sender, EventArgs e)
         {
+            Loading();
             DatabaseConnecting();
             TimeSet();
             MenuLoad();
             CreateTables();
-            Loading();
         }
-
         private void Loading()
         {
             this.Hide();
             Loading loading = new Loading();
+            loading.ShowDialog();
             loading.Closed += (s, e) =>
             {
                 Show();
             };
-            loading.Show();
         }
 
         //테이블들 만들기
@@ -213,7 +212,7 @@ namespace WindowsFormsApp1
             od.Closed += (a, args) => Show();
             od.PayRequest = new DataGetEventHandler(this.PayRequest);
             od.SubmitRequest = new DataGetEventHandler(this.SubmitRequest);
-            od.Show();
+            od.ShowDialog();
         }
 
         private void DatabaseConnecting()
@@ -261,7 +260,7 @@ namespace WindowsFormsApp1
         {
             try
             {
-                query = String.Format("INSERT INTO order_log (table_idx, total_price, payMethod) VALUES ({0}, {1}, '{2}');", seatNum, totalPrice, payMethod);
+                query = String.Format("INSERT INTO pay_log (table_idx, total_price, payMethod) VALUES ({0}, {1}, '{2}');", seatNum, totalPrice, payMethod);
                 scom.CommandText = query;
                 scom.ExecuteNonQuery();
 
@@ -287,7 +286,7 @@ namespace WindowsFormsApp1
         {
             try
             {
-                query = String.Format("INSERT INTO order_log_detail (order_log_idx, menu, count) VALUES ({0}, (SELECT idx FROM menus WHERE name LIKE '{1}'), {2});;", lastIdx, seatOrder.Name, seatOrder.Count);
+                query = String.Format("INSERT INTO pay_log_detail (pay_log_idx, menu, count) VALUES ({0}, (SELECT idx FROM menus WHERE name LIKE '{1}'), {2});;", lastIdx, seatOrder.Name, seatOrder.Count);
                 scom.CommandText = query;
                 scom.ExecuteNonQuery();
             }
@@ -296,6 +295,29 @@ namespace WindowsFormsApp1
                 MessageBox.Show("결제에 실패하였습니다\n" + error.Message, "결제 실패",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
             }
+        }
+
+        private void exitClick(object sender, EventArgs e)
+        {
+            string message = "종료하시겠습니까?";
+            string caption = "종료";
+            var result = MessageBox.Show(message, caption,
+                                            MessageBoxButtons.YesNo,
+                                            MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+            {
+                // cancel the closure of the form.
+                return;
+            }
+            else
+            {
+                Close();
+            }
+        }
+
+        private void statisticsClick(object sender, EventArgs e)
+        {
+
         }
     }
 }

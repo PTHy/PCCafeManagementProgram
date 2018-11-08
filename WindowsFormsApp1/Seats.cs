@@ -494,13 +494,46 @@ namespace WindowsFormsApp1
             Close();
         }
 
+        private string GetPayMessage()
+        {
+            string message = "";
+            int i = 0;
+
+            foreach (Order seatOrder in SeatOrders)
+            {
+                message += String.Format("{0} x {1} = {2}\n",seatOrder.Name, seatOrder.Count, seatOrder.GetPayMoney());
+
+                if(++i > 5)
+                {
+                    break;
+                }
+            }
+
+            message += "\n결제하시겠습니까?";
+
+            return message;
+        }
+
         private void PayClick(object sender, EventArgs e)
         {
-            if(IsValidRequest())
+
+            string message = GetPayMessage();
+            string caption = "결제";
+            var result = MessageBox.Show(message, caption,
+                                            MessageBoxButtons.YesNo,
+                                            MessageBoxIcon.Question);
+            if (result == DialogResult.No)
             {
-                SeatsClone();
-                Close();
-                PayRequest(tempSeats);
+                // cancel the closure of the form.
+                return;
+            } else
+            {
+                if (IsValidRequest())
+                {
+                    SeatsClone();
+                    Close();
+                    PayRequest(tempSeats);
+                }
             }
         }
 

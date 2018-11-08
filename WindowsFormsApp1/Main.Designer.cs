@@ -34,16 +34,19 @@ namespace WindowsFormsApp1
             this.tb = new System.Windows.Forms.TableLayoutPanel();
             this.time1 = new System.Windows.Forms.Label();
             this.time2 = new System.Windows.Forms.Label();
+            this.statistics = new System.Windows.Forms.Button();
+            this.exit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tb
             // 
             this.tb.AutoSize = true;
             this.tb.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+            this.tb.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 598F));
             this.tb.Location = new System.Drawing.Point(0, 0);
             this.tb.Name = "tb";
             this.tb.Padding = new System.Windows.Forms.Padding(3);
-            this.tb.Size = new System.Drawing.Size(604, 453);
+            this.tb.Size = new System.Drawing.Size(608, 453);
             this.tb.TabIndex = 1;
             // 
             // time1
@@ -66,11 +69,37 @@ namespace WindowsFormsApp1
             this.time2.TabIndex = 2;
             this.time2.Text = "00:00:00";
             // 
+            // statistics
+            // 
+            this.statistics.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.statistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.statistics.Location = new System.Drawing.Point(652, 199);
+            this.statistics.Name = "statistics";
+            this.statistics.Size = new System.Drawing.Size(124, 77);
+            this.statistics.TabIndex = 3;
+            this.statistics.Text = "통계";
+            this.statistics.UseVisualStyleBackColor = true;
+            this.statistics.Click += new System.EventHandler(this.statisticsClick);
+            // 
+            // exit
+            // 
+            this.exit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exit.Location = new System.Drawing.Point(652, 320);
+            this.exit.Name = "exit";
+            this.exit.Size = new System.Drawing.Size(124, 77);
+            this.exit.TabIndex = 4;
+            this.exit.Text = "종료";
+            this.exit.UseVisualStyleBackColor = true;
+            this.exit.Click += new System.EventHandler(this.exitClick);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.exit);
+            this.Controls.Add(this.statistics);
             this.Controls.Add(this.time2);
             this.Controls.Add(this.time1);
             this.Controls.Add(this.tb);
@@ -93,5 +122,7 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Label time1;
         private System.Windows.Forms.TableLayoutPanel tb;
         private Label time2;
+        private Button statistics;
+        private Button exit;
     }
 }

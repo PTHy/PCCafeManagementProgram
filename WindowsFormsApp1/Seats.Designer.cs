@@ -214,7 +214,7 @@ namespace WindowsFormsApp1
             // 
             this.tbMenus.AutoScroll = true;
             this.tbMenus.AutoSize = true;
-            this.tbMenus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tbMenus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tbMenus.Location = new System.Drawing.Point(0, 0);
             this.tbMenus.Name = "tbMenus";
             this.tbMenus.Size = new System.Drawing.Size(300, 328);
@@ -363,6 +363,7 @@ namespace WindowsFormsApp1
             this.Controls.Add(this.Snack);
             this.Controls.Add(this.Ramen);
             this.Controls.Add(this.Rice);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Seats";
             this.Text = "PC";
             this.Load += new System.EventHandler(this.Seats_Load);
