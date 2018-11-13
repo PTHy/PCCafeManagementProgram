@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using System.Threading;
 
 namespace WindowsFormsApp1
 {
@@ -27,6 +28,9 @@ namespace WindowsFormsApp1
         const int MAX_SEAT_ORDER_SIZE = 4;
         const string imagePath = "D:\\Dev\\C#\\PCCafeManagementProgram\\resources\\image\\";
         string query;
+        private DateTime now = DateTime.Now;
+        private System.Windows.Forms.Timer timer;
+        private Thread timerThread;
         MySqlConnection scon = null;
         MySqlCommand scom = null;
         MySqlDataReader sdr = null;
@@ -44,20 +48,62 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
-        private void TimeSet()
-        {
-            time1.Text = DateTime.Now.ToString("yyyy-MM-dd");
-            time2.Text = DateTime.Now.ToString("HH:mm:ss");
-        }
-       
-        private void Main_Load(object sender, EventArgs e)
+
+        private void MainLoad(object sender, EventArgs e)
         {
             Loading();
             DatabaseConnecting();
-            TimeSet();
+            SetTime();
             MenuLoad();
             CreateTables();
         }
+
+        private void MainClosing(Object sender, CancelEventArgs e)
+        {
+            string message = "종료하시겠습니까?";
+            string caption = "종료";
+            var result = MessageBox.Show(message, caption,
+                                            MessageBoxButtons.YesNo,
+                                            MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                // cancel the closure of the form.
+                return;
+            }
+            e.Cancel = true;
+        }
+
+        private void SetTime()
+        {
+            SetTimeText();
+            timerThread = new Thread(new ThreadStart(SetTimer));
+            timerThread.Start();
+        }
+            
+        private void SetTimeText()
+        {
+            time1.Text = now.ToString("yyyy-MM-dd");
+            time2.Text = now.ToString("HH:mm:ss");
+        }
+
+        private void SetTimer()
+        {
+            timer = new System.Windows.Forms.Timer();
+
+            // 1초마다 발생
+            timer.Interval = 1000;
+            timer.Tick += new EventHandler(timerTick);
+
+            timer.Start();
+        }
+
+        private void timerTick(object sender, EventArgs e)
+        {
+            Console.WriteLine("hi");
+            now.AddSeconds(1);
+            SetTimeText();
+        }
+
         private void Loading()
         {
             this.Hide();
@@ -260,7 +306,7 @@ namespace WindowsFormsApp1
         {
             try
             {
-                query = String.Format("INSERT INTO pay_log (table_idx, total_price, payMethod) VALUES ({0}, {1}, '{2}');", seatNum, totalPrice, payMethod);
+                query = String.Format("INSERT INTO pay_log (table_idx, total_price, pay_method) VALUES ({0}, {1}, '{2}');", seatNum, totalPrice, payMethod);
                 scom.CommandText = query;
                 scom.ExecuteNonQuery();
 
@@ -299,25 +345,15 @@ namespace WindowsFormsApp1
 
         private void exitClick(object sender, EventArgs e)
         {
-            string message = "종료하시겠습니까?";
-            string caption = "종료";
-            var result = MessageBox.Show(message, caption,
-                                            MessageBoxButtons.YesNo,
-                                            MessageBoxIcon.Question);
-            if (result == DialogResult.No)
-            {
-                // cancel the closure of the form.
-                return;
-            }
-            else
-            {
-                Close();
-            }
+            Close();
         }
 
         private void statisticsClick(object sender, EventArgs e)
         {
-
+            this.Hide();
+            Ststistics st = new Ststistics(scom);
+            st.Closed += (s, args) => { Show(); };
+            st.ShowDialog();
         }
     }
 }

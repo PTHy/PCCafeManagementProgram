@@ -75,9 +75,10 @@ namespace WindowsFormsApp1
             // 
             this.Rice.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Rice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Rice.Location = new System.Drawing.Point(70, 58);
+            this.Rice.Location = new System.Drawing.Point(61, 46);
+            this.Rice.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Rice.Name = "Rice";
-            this.Rice.Size = new System.Drawing.Size(63, 43);
+            this.Rice.Size = new System.Drawing.Size(55, 34);
             this.Rice.TabIndex = 0;
             this.Rice.Text = "밥류";
             this.Rice.UseVisualStyleBackColor = false;
@@ -87,9 +88,10 @@ namespace WindowsFormsApp1
             // 
             this.Ramen.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Ramen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Ramen.Location = new System.Drawing.Point(134, 58);
+            this.Ramen.Location = new System.Drawing.Point(117, 46);
+            this.Ramen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Ramen.Name = "Ramen";
-            this.Ramen.Size = new System.Drawing.Size(65, 43);
+            this.Ramen.Size = new System.Drawing.Size(57, 34);
             this.Ramen.TabIndex = 1;
             this.Ramen.Text = "라면류";
             this.Ramen.UseVisualStyleBackColor = false;
@@ -99,9 +101,10 @@ namespace WindowsFormsApp1
             // 
             this.Snack.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Snack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Snack.Location = new System.Drawing.Point(200, 58);
+            this.Snack.Location = new System.Drawing.Point(175, 46);
+            this.Snack.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Snack.Name = "Snack";
-            this.Snack.Size = new System.Drawing.Size(65, 43);
+            this.Snack.Size = new System.Drawing.Size(57, 34);
             this.Snack.TabIndex = 2;
             this.Snack.Text = "과자류";
             this.Snack.UseVisualStyleBackColor = false;
@@ -111,9 +114,10 @@ namespace WindowsFormsApp1
             // 
             this.Drink.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Drink.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Drink.Location = new System.Drawing.Point(266, 58);
+            this.Drink.Location = new System.Drawing.Point(233, 46);
+            this.Drink.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Drink.Name = "Drink";
-            this.Drink.Size = new System.Drawing.Size(65, 43);
+            this.Drink.Size = new System.Drawing.Size(57, 34);
             this.Drink.TabIndex = 3;
             this.Drink.Text = "음료류";
             this.Drink.UseVisualStyleBackColor = false;
@@ -122,27 +126,27 @@ namespace WindowsFormsApp1
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(345, 223);
+            this.label1.Location = new System.Drawing.Point(302, 178);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 15);
+            this.label1.Size = new System.Drawing.Size(61, 12);
             this.label1.TabIndex = 6;
             this.label1.Text = "전체금액 :";
             // 
             // totalPrice
             // 
             this.totalPrice.AutoSize = true;
-            this.totalPrice.Location = new System.Drawing.Point(456, 223);
+            this.totalPrice.Location = new System.Drawing.Point(399, 178);
             this.totalPrice.Name = "totalPrice";
-            this.totalPrice.Size = new System.Drawing.Size(15, 15);
+            this.totalPrice.Size = new System.Drawing.Size(11, 12);
             this.totalPrice.TabIndex = 7;
             this.totalPrice.Text = "0";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(345, 263);
+            this.label3.Location = new System.Drawing.Point(302, 210);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 15);
+            this.label3.Size = new System.Drawing.Size(61, 12);
             this.label3.TabIndex = 8;
             this.label3.Text = "지불금액 :";
             // 
@@ -155,17 +159,19 @@ namespace WindowsFormsApp1
             "10000",
             "50000",
             "금액에 맞게"});
-            this.payPrice.Location = new System.Drawing.Point(420, 260);
+            this.payPrice.Location = new System.Drawing.Point(368, 208);
+            this.payPrice.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.payPrice.Name = "payPrice";
-            this.payPrice.Size = new System.Drawing.Size(99, 23);
+            this.payPrice.Size = new System.Drawing.Size(87, 20);
             this.payPrice.TabIndex = 9;
             // 
             // cash
             // 
             this.cash.AutoSize = true;
-            this.cash.Location = new System.Drawing.Point(356, 380);
+            this.cash.Location = new System.Drawing.Point(312, 304);
+            this.cash.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cash.Name = "cash";
-            this.cash.Size = new System.Drawing.Size(58, 19);
+            this.cash.Size = new System.Drawing.Size(47, 16);
             this.cash.TabIndex = 10;
             this.cash.TabStop = true;
             this.cash.Text = "현금";
@@ -174,9 +180,10 @@ namespace WindowsFormsApp1
             // card
             // 
             this.card.AutoSize = true;
-            this.card.Location = new System.Drawing.Point(356, 405);
+            this.card.Location = new System.Drawing.Point(312, 324);
+            this.card.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.card.Name = "card";
-            this.card.Size = new System.Drawing.Size(58, 19);
+            this.card.Size = new System.Drawing.Size(47, 16);
             this.card.TabIndex = 11;
             this.card.TabStop = true;
             this.card.Text = "카드";
@@ -186,27 +193,28 @@ namespace WindowsFormsApp1
             // 
             this.foodImage.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("foodImage.BackgroundImage")));
             this.foodImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.foodImage.Location = new System.Drawing.Point(525, 250);
+            this.foodImage.Location = new System.Drawing.Point(459, 200);
+            this.foodImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.foodImage.Name = "foodImage";
-            this.foodImage.Size = new System.Drawing.Size(193, 185);
+            this.foodImage.Size = new System.Drawing.Size(169, 148);
             this.foodImage.TabIndex = 13;
             this.foodImage.TabStop = false;
             // 
             // seatNumText
             // 
             this.seatNumText.AutoSize = true;
-            this.seatNumText.Location = new System.Drawing.Point(21, 29);
+            this.seatNumText.Location = new System.Drawing.Point(18, 23);
             this.seatNumText.Name = "seatNumText";
-            this.seatNumText.Size = new System.Drawing.Size(15, 15);
+            this.seatNumText.Size = new System.Drawing.Size(11, 12);
             this.seatNumText.TabIndex = 14;
             this.seatNumText.Text = "0";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(42, 29);
+            this.label5.Location = new System.Drawing.Point(37, 23);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 15);
+            this.label5.Size = new System.Drawing.Size(57, 12);
             this.label5.TabIndex = 15;
             this.label5.Text = "번 테이블";
             // 
@@ -216,17 +224,19 @@ namespace WindowsFormsApp1
             this.tbMenus.AutoSize = true;
             this.tbMenus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tbMenus.Location = new System.Drawing.Point(0, 0);
+            this.tbMenus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbMenus.Name = "tbMenus";
-            this.tbMenus.Size = new System.Drawing.Size(300, 328);
+            this.tbMenus.Size = new System.Drawing.Size(262, 262);
             this.tbMenus.TabIndex = 0;
             // 
             // orderList
             // 
             this.orderList.FullRowSelect = true;
             this.orderList.GridLines = true;
-            this.orderList.Location = new System.Drawing.Point(344, 58);
+            this.orderList.Location = new System.Drawing.Point(301, 46);
+            this.orderList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.orderList.Name = "orderList";
-            this.orderList.Size = new System.Drawing.Size(372, 153);
+            this.orderList.Size = new System.Drawing.Size(326, 123);
             this.orderList.TabIndex = 17;
             this.orderList.UseCompatibleStateImageBehavior = false;
             this.orderList.View = System.Windows.Forms.View.Details;
@@ -235,17 +245,18 @@ namespace WindowsFormsApp1
             // order_time
             // 
             this.order_time.AutoSize = true;
-            this.order_time.Location = new System.Drawing.Point(363, 24);
+            this.order_time.Location = new System.Drawing.Point(318, 19);
             this.order_time.Name = "order_time";
-            this.order_time.Size = new System.Drawing.Size(82, 15);
+            this.order_time.Size = new System.Drawing.Size(65, 12);
             this.order_time.TabIndex = 18;
             this.order_time.Text = "주문 시간 :";
             // 
             // submit
             // 
-            this.submit.Location = new System.Drawing.Point(436, 299);
+            this.submit.Location = new System.Drawing.Point(382, 239);
+            this.submit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.submit.Name = "submit";
-            this.submit.Size = new System.Drawing.Size(83, 65);
+            this.submit.Size = new System.Drawing.Size(73, 52);
             this.submit.TabIndex = 19;
             this.submit.Text = "주문";
             this.submit.UseVisualStyleBackColor = true;
@@ -254,9 +265,10 @@ namespace WindowsFormsApp1
             // reset
             // 
             this.reset.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.reset.Location = new System.Drawing.Point(344, 299);
+            this.reset.Location = new System.Drawing.Point(301, 239);
+            this.reset.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.reset.Name = "reset";
-            this.reset.Size = new System.Drawing.Size(86, 65);
+            this.reset.Size = new System.Drawing.Size(75, 52);
             this.reset.TabIndex = 20;
             this.reset.Text = "리셋";
             this.reset.UseVisualStyleBackColor = true;
@@ -264,9 +276,10 @@ namespace WindowsFormsApp1
             // 
             // home
             // 
-            this.home.Location = new System.Drawing.Point(650, 12);
+            this.home.Location = new System.Drawing.Point(569, 10);
+            this.home.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.home.Name = "home";
-            this.home.Size = new System.Drawing.Size(66, 39);
+            this.home.Size = new System.Drawing.Size(58, 31);
             this.home.TabIndex = 21;
             this.home.Text = "Home";
             this.home.UseVisualStyleBackColor = true;
@@ -274,9 +287,10 @@ namespace WindowsFormsApp1
             // 
             // pay
             // 
-            this.pay.Location = new System.Drawing.Point(435, 370);
+            this.pay.Location = new System.Drawing.Point(381, 296);
+            this.pay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pay.Name = "pay";
-            this.pay.Size = new System.Drawing.Size(82, 64);
+            this.pay.Size = new System.Drawing.Size(72, 51);
             this.pay.TabIndex = 22;
             this.pay.Text = "결제";
             this.pay.UseVisualStyleBackColor = true;
@@ -285,9 +299,9 @@ namespace WindowsFormsApp1
             // orderTime
             // 
             this.orderTime.AutoSize = true;
-            this.orderTime.Location = new System.Drawing.Point(456, 24);
+            this.orderTime.Location = new System.Drawing.Point(399, 19);
             this.orderTime.Name = "orderTime";
-            this.orderTime.Size = new System.Drawing.Size(150, 15);
+            this.orderTime.Size = new System.Drawing.Size(113, 12);
             this.orderTime.TabIndex = 23;
             this.orderTime.Text = "0000-00-00 00:00:00";
             // 
@@ -295,9 +309,10 @@ namespace WindowsFormsApp1
             // 
             this.All.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.All.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.All.Location = new System.Drawing.Point(4, 58);
+            this.All.Location = new System.Drawing.Point(4, 46);
+            this.All.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.All.Name = "All";
-            this.All.Size = new System.Drawing.Size(65, 43);
+            this.All.Size = new System.Drawing.Size(57, 34);
             this.All.TabIndex = 4;
             this.All.Text = "전체";
             this.All.UseVisualStyleBackColor = false;
@@ -306,9 +321,10 @@ namespace WindowsFormsApp1
             // plus
             // 
             this.plus.Enabled = false;
-            this.plus.Location = new System.Drawing.Point(523, 214);
+            this.plus.Location = new System.Drawing.Point(458, 171);
+            this.plus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.plus.Name = "plus";
-            this.plus.Size = new System.Drawing.Size(89, 33);
+            this.plus.Size = new System.Drawing.Size(78, 26);
             this.plus.TabIndex = 24;
             this.plus.Text = "+";
             this.plus.UseVisualStyleBackColor = true;
@@ -317,9 +333,10 @@ namespace WindowsFormsApp1
             // minus
             // 
             this.minus.Enabled = false;
-            this.minus.Location = new System.Drawing.Point(627, 214);
+            this.minus.Location = new System.Drawing.Point(549, 171);
+            this.minus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.minus.Name = "minus";
-            this.minus.Size = new System.Drawing.Size(89, 33);
+            this.minus.Size = new System.Drawing.Size(78, 26);
             this.minus.TabIndex = 25;
             this.minus.Text = "-";
             this.minus.UseVisualStyleBackColor = true;
@@ -329,16 +346,17 @@ namespace WindowsFormsApp1
             // 
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.tbMenus);
-            this.panel1.Location = new System.Drawing.Point(4, 107);
+            this.panel1.Location = new System.Drawing.Point(4, 86);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(335, 331);
+            this.panel1.Size = new System.Drawing.Size(293, 265);
             this.panel1.TabIndex = 26;
             // 
             // Seats
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(728, 450);
+            this.ClientSize = new System.Drawing.Size(637, 360);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.reset);
             this.Controls.Add(this.minus);
@@ -364,9 +382,11 @@ namespace WindowsFormsApp1
             this.Controls.Add(this.Ramen);
             this.Controls.Add(this.Rice);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Seats";
             this.Text = "PC";
-            this.Load += new System.EventHandler(this.Seats_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SeatsClosing);
+            this.Load += new System.EventHandler(this.SeatsLoad);
             ((System.ComponentModel.ISupportInitialize)(this.foodImage)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

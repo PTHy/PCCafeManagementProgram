@@ -13,6 +13,7 @@ namespace WindowsFormsApp1
 
     public partial class Seats : Form
     {
+        private Timer timer;
         public DataGetEventHandler PayRequest;
         public DataGetEventHandler SubmitRequest;
         Seats sendSeat;
@@ -33,6 +34,8 @@ namespace WindowsFormsApp1
         string defaultImage = Main.ImagePath + "default.png";
         private string barcodeString = string.Empty;
         List<Food> menus;
+
+        bool isSubmited = false;
 
         public int SeatNum { get => seatNum; set => seatNum = value; }
         public int TempTotalPrice { get => tempTotalPrice; set => tempTotalPrice = value; }
@@ -61,10 +64,24 @@ namespace WindowsFormsApp1
             SeatOrderSet();
         }
 
-        private void Seats_Load(object sender, EventArgs e)
+        private void SeatsLoad(object sender, EventArgs e)
         {
             MenuSet();
             OrderListSetting();
+        }
+
+        private void SetTimer()
+        {
+            timer = new Timer();
+            timer.Interval = 1000;
+            timer.Tick += new EventHandler(timerTick);
+
+            timer.Start();
+        }
+
+        private void timerTick(object sender, EventArgs e)
+        {
+
         }
 
         private void SeatOrderSet()
@@ -201,6 +218,24 @@ namespace WindowsFormsApp1
             }
         }
 
+        private void SeatsClosing(Object sender, CancelEventArgs e)
+        {
+           if(orderList.Items.Count > 0 && !isSubmited)
+            {
+                string message = "주문하시지 않은 정보는 없어집니다\n정말 메인으로 가시겠습니까?";
+                string caption = "경고";
+                var result = MessageBox.Show(message, caption,
+                                                MessageBoxButtons.YesNo,
+                                                MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    // cancel the closure of the form.
+                    return;
+                }
+                e.Cancel = true;
+            }
+        }
+
         private bool IsAlreadyOrdered(string menuName)
         {
             // 이미 주문을 한 상태이면
@@ -218,7 +253,7 @@ namespace WindowsFormsApp1
 
         private void AddOrder(Food selectedFood)
         {
-            Order newOrder = new Order(selectedFood.Name, selectedFood.Price, DateTime.Now);
+            Order newOrder = new Order(selectedFood.Name, selectedFood.Price, DateTime.Now, selectedFood.Category_.ToString());
             SeatOrders.Add(newOrder);
             OrderListAdd(newOrder);
             TempTotalPrice += newOrder.Price;
@@ -259,7 +294,7 @@ namespace WindowsFormsApp1
             if (orderList.SelectedItems.Count < 0)
             {
                 MessageBox.Show("주문선택이 되지 않은 채 버튼이 눌렸습니다", "수정 실패",
-                MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
             Button op = (Button)sender;
 
@@ -427,6 +462,7 @@ namespace WindowsFormsApp1
                 MessageBox.Show("주문이 되었습니다", "주문 성공",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
 
+                isSubmited = true;
                 Close();
             }
 
@@ -458,22 +494,22 @@ namespace WindowsFormsApp1
         {
             int temp;
 
-            if(SeatOrders == null)
+            if(orderList.Items.Count <= 0)
             {
                 MessageBox.Show("선택된 주문이 없습니다", "결제 실패",
-                MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                 return false;
             }
             if (cash.Checked == false && card.Checked == false)
             {
                 MessageBox.Show("결제 방법을 선택해주세요", "주문 실패",
-                MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                 return false;
             }
             if (payPrice.SelectedIndex < 0) // 지불 금액이 선택되지 않았을 때
             {
                 MessageBox.Show("지불 금액이 선택되지 않았습니다", "주문 실패",
-                MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                 return false; 
             }
             else if (int.TryParse(payPrice.SelectedItem as string, out temp)) // 지불 금액이 숫자일 때
@@ -481,7 +517,7 @@ namespace WindowsFormsApp1
                 if(temp < TempTotalPrice)
                 {
                     MessageBox.Show("지불 금액이 총 금액보다 적습니다", "주문 실패",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                     return false;
                 }
             }
@@ -530,6 +566,7 @@ namespace WindowsFormsApp1
             {
                 if (IsValidRequest())
                 {
+                    isSubmited = true;
                     SeatsClone();
                     Close();
                     PayRequest(tempSeats);

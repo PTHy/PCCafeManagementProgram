@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.home = new System.Windows.Forms.Button();
+            this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.lbTotalPrice = new System.Windows.Forms.Label();
             this.menuStst = new System.Windows.Forms.ListView();
@@ -37,25 +37,28 @@
             this.label3 = new System.Windows.Forms.Label();
             this.categoryStst = new System.Windows.Forms.ListView();
             this.label4 = new System.Windows.Forms.Label();
-            this.listView3 = new System.Windows.Forms.ListView();
+            this.payMethodStst = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
-            // button1
+            // home
             // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(723, 21);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(96, 39);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "뒤로가기";
-            this.button1.UseVisualStyleBackColor = true;
+            this.home.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.home.Location = new System.Drawing.Point(723, 21);
+            this.home.Name = "home";
+            this.home.Size = new System.Drawing.Size(96, 39);
+            this.home.TabIndex = 1;
+            this.home.Text = "뒤로가기";
+            this.home.UseVisualStyleBackColor = true;
+            this.home.Click += new System.EventHandler(this.home_Click);
             // 
-            // dateTimePicker1
+            // dateTimePicker
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(489, 26);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 25);
-            this.dateTimePicker1.TabIndex = 3;
+            this.dateTimePicker.CustomFormat = "";
+            this.dateTimePicker.Location = new System.Drawing.Point(489, 26);
+            this.dateTimePicker.Name = "dateTimePicker";
+            this.dateTimePicker.Size = new System.Drawing.Size(200, 25);
+            this.dateTimePicker.TabIndex = 3;
+            this.dateTimePicker.ValueChanged += new System.EventHandler(this.DateTimePickerChange);
             // 
             // label1
             // 
@@ -71,7 +74,7 @@
             // 
             this.lbTotalPrice.AutoSize = true;
             this.lbTotalPrice.Font = new System.Drawing.Font("굴림", 15F);
-            this.lbTotalPrice.Location = new System.Drawing.Point(148, 26);
+            this.lbTotalPrice.Location = new System.Drawing.Point(123, 26);
             this.lbTotalPrice.Name = "lbTotalPrice";
             this.lbTotalPrice.Size = new System.Drawing.Size(25, 25);
             this.lbTotalPrice.TabIndex = 5;
@@ -110,6 +113,7 @@
             // 
             // categoryStst
             // 
+            this.categoryStst.GridLines = true;
             this.categoryStst.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.categoryStst.LabelWrap = false;
             this.categoryStst.Location = new System.Drawing.Point(451, 117);
@@ -128,22 +132,23 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "결제 방법 별 매출";
             // 
-            // listView3
+            // payMethodStst
             // 
-            this.listView3.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView3.LabelWrap = false;
-            this.listView3.Location = new System.Drawing.Point(453, 352);
-            this.listView3.Name = "listView3";
-            this.listView3.Size = new System.Drawing.Size(366, 103);
-            this.listView3.TabIndex = 11;
-            this.listView3.UseCompatibleStateImageBehavior = false;
+            this.payMethodStst.GridLines = true;
+            this.payMethodStst.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.payMethodStst.LabelWrap = false;
+            this.payMethodStst.Location = new System.Drawing.Point(453, 352);
+            this.payMethodStst.Name = "payMethodStst";
+            this.payMethodStst.Size = new System.Drawing.Size(366, 103);
+            this.payMethodStst.TabIndex = 11;
+            this.payMethodStst.UseCompatibleStateImageBehavior = false;
             // 
             // Ststistics
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(857, 485);
-            this.Controls.Add(this.listView3);
+            this.Controls.Add(this.payMethodStst);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.categoryStst);
             this.Controls.Add(this.label3);
@@ -151,12 +156,11 @@
             this.Controls.Add(this.menuStst);
             this.Controls.Add(this.lbTotalPrice);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.dateTimePicker);
+            this.Controls.Add(this.home);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Ststistics";
             this.Text = "Ststistics";
-            this.Load += new System.EventHandler(this.StstisticsLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -164,8 +168,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Button home;
+        private System.Windows.Forms.DateTimePicker dateTimePicker;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lbTotalPrice;
         private System.Windows.Forms.ListView menuStst;
@@ -173,6 +177,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListView categoryStst;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ListView listView3;
+        private System.Windows.Forms.ListView payMethodStst;
     }
 }

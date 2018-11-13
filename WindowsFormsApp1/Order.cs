@@ -12,7 +12,7 @@ namespace WindowsFormsApp1
         private DateTime orderTime;
         public int Count { get => count; set => count = value; }
 
-        public Order(string name, int price, DateTime orderTime):base(price, name)
+        public Order(string name, int price, DateTime orderTime, string category):base(price, name, category)
         {
             this.orderTime = orderTime;
         }

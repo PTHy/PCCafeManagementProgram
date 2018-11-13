@@ -13,6 +13,7 @@ namespace WindowsFormsApp1
         private string image;
         private string barcode;
         private Category category;
+        private string category1;
 
         public int Price { get => price; set => price = value; }
         public string Name { get => name; set => name = value; }
@@ -54,10 +55,34 @@ namespace WindowsFormsApp1
                     break;
             }
         }
-        public Food(int price, string name)
+        public Food(int price, string name, string category)
         {
             this.Price = price;
             this.Name = name;
+            switch (category)
+            {
+                case "Drink":
+                    this.category = Category.Drink;
+                    break;
+                case "Hamberger":
+                    this.category = Category.Hamberger;
+                    break;
+                case "Ramen":
+                    this.category = Category.Ramen;
+                    break;
+                case "Rice":
+                    this.category = Category.Rice;
+                    break;
+                case "Topping":
+                    this.category = Category.Topping;
+                    break;
+                case "Snack":
+                    this.category = Category.Snack;
+                    break;
+                default:
+                    this.category = Category.Etc;
+                    break;
+            }
         }
         public Food()
         {

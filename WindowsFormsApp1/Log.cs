@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    class Stst
+    class Log : Food
     {
+        
+        public Log(string name, int price, string category) : base(price,name,category)
+        {
+
+        }
     }
 }

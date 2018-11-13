@@ -55,9 +55,6 @@ namespace WindowsFormsApp1
             loadingBar.Maximum = 90;
             loadingBar.Step = 5;
             loadingBar.Value = 0;
-
-            lbLoading.Parent = loadingBar;
-            lbLoading.BackColor = Color.Transparent;
         }
     }
 }

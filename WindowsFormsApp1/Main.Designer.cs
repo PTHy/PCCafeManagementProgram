@@ -42,11 +42,10 @@ namespace WindowsFormsApp1
             // 
             this.tb.AutoSize = true;
             this.tb.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tb.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 598F));
             this.tb.Location = new System.Drawing.Point(0, 0);
             this.tb.Name = "tb";
             this.tb.Padding = new System.Windows.Forms.Padding(3);
-            this.tb.Size = new System.Drawing.Size(608, 453);
+            this.tb.Size = new System.Drawing.Size(610, 453);
             this.tb.TabIndex = 1;
             // 
             // time1
@@ -106,7 +105,8 @@ namespace WindowsFormsApp1
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
             this.Text = "Main";
-            this.Load += new System.EventHandler(this.Main_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainClosing);
+            this.Load += new System.EventHandler(this.MainLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 

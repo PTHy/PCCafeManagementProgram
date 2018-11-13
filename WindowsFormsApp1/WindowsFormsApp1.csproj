@@ -86,6 +86,7 @@
     <Compile Include="Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Log.cs" />
     <Compile Include="Ststistics.cs">
       <SubType>Form</SubType>
     </Compile>
