@@ -43,18 +43,19 @@ namespace WindowsFormsApp1
             this.tb.AutoSize = true;
             this.tb.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.tb.Location = new System.Drawing.Point(0, 0);
+            this.tb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tb.Name = "tb";
-            this.tb.Padding = new System.Windows.Forms.Padding(3);
-            this.tb.Size = new System.Drawing.Size(610, 453);
+            this.tb.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tb.Size = new System.Drawing.Size(534, 362);
             this.tb.TabIndex = 1;
             // 
             // time1
             // 
             this.time1.AutoSize = true;
             this.time1.Font = new System.Drawing.Font("굴림", 15F, System.Drawing.FontStyle.Bold);
-            this.time1.Location = new System.Drawing.Point(647, 63);
+            this.time1.Location = new System.Drawing.Point(566, 50);
             this.time1.Name = "time1";
-            this.time1.Size = new System.Drawing.Size(152, 25);
+            this.time1.Size = new System.Drawing.Size(129, 20);
             this.time1.TabIndex = 0;
             this.time1.Text = "0000-00-00";
             // 
@@ -62,9 +63,9 @@ namespace WindowsFormsApp1
             // 
             this.time2.AutoSize = true;
             this.time2.Font = new System.Drawing.Font("굴림", 15F, System.Drawing.FontStyle.Bold);
-            this.time2.Location = new System.Drawing.Point(647, 100);
+            this.time2.Location = new System.Drawing.Point(566, 80);
             this.time2.Name = "time2";
-            this.time2.Size = new System.Drawing.Size(114, 25);
+            this.time2.Size = new System.Drawing.Size(97, 20);
             this.time2.TabIndex = 2;
             this.time2.Text = "00:00:00";
             // 
@@ -72,9 +73,10 @@ namespace WindowsFormsApp1
             // 
             this.statistics.Cursor = System.Windows.Forms.Cursors.Hand;
             this.statistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.statistics.Location = new System.Drawing.Point(652, 199);
+            this.statistics.Location = new System.Drawing.Point(570, 159);
+            this.statistics.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.statistics.Name = "statistics";
-            this.statistics.Size = new System.Drawing.Size(124, 77);
+            this.statistics.Size = new System.Drawing.Size(108, 62);
             this.statistics.TabIndex = 3;
             this.statistics.Text = "통계";
             this.statistics.UseVisualStyleBackColor = true;
@@ -84,9 +86,10 @@ namespace WindowsFormsApp1
             // 
             this.exit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.exit.Location = new System.Drawing.Point(652, 320);
+            this.exit.Location = new System.Drawing.Point(570, 256);
+            this.exit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.exit.Name = "exit";
-            this.exit.Size = new System.Drawing.Size(124, 77);
+            this.exit.Size = new System.Drawing.Size(108, 62);
             this.exit.TabIndex = 4;
             this.exit.Text = "종료";
             this.exit.UseVisualStyleBackColor = true;
@@ -94,15 +97,16 @@ namespace WindowsFormsApp1
             // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(700, 360);
             this.Controls.Add(this.exit);
             this.Controls.Add(this.statistics);
             this.Controls.Add(this.time2);
             this.Controls.Add(this.time1);
             this.Controls.Add(this.tb);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Main";
             this.Text = "Main";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainClosing);

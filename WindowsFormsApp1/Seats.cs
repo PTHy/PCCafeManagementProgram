@@ -13,104 +13,109 @@ namespace WindowsFormsApp1
 
     public partial class Seats : Form
     {
-        private Timer timer;
+        private Timer clock;
+        private DateTime now = DateTime.Now;
         public DataGetEventHandler PayRequest;
         public DataGetEventHandler SubmitRequest;
-        Seats sendSeat;
         const int MAX_TABLE_WIDTH = 2;
         const float TABLE_CELL_WIDTH = (float) 100/MAX_TABLE_WIDTH;
         const float TABLE_CELL_HEIGHT = 140;
         const int ORDER_LIST_MENU_NAME_SIZE = 150;
         const int ORDER_LIST_COUNT_SIZE = 75;
         const int ORDER_LIST_PRICE_SIZE = 75;
-
-        List<Order> seatOrders = new List<Order>();
+        private string rootPath = Application.StartupPath;
+        private string imagePath = "";
         Seat seat;
-        Seats tempSeats;
-        int tempTotalPrice = 0;
-        int seatNum;
-        string tempPayMethod;
-        string tempPayPrice;
-        string defaultImage = Main.ImagePath + "default.png";
+        string defaultImage = "";
         private string barcodeString = string.Empty;
         List<Food> menus;
 
         bool isSubmited = false;
+        public Seat Seat { get => seat; set => seat = value; }
 
-        public int SeatNum { get => seatNum; set => seatNum = value; }
-        public int TempTotalPrice { get => tempTotalPrice; set => tempTotalPrice = value; }
-        public string TempPayMethod { get => tempPayMethod; set => tempPayMethod = value; }
-        public string TempPayPrice { get => tempPayPrice; set => tempPayPrice = value; }
-        public List<Order> SeatOrders { get => seatOrders; set => seatOrders = value; }
-
-        // 주문을 한 적이 없던 경우
-
-        public Seats(int seatNum, List<Food> menus)
+        public Seats(Seat seat, List<Food> menus)
         {
             InitializeComponent();
             this.menus = menus;
-            SeatSet(seatNum);
-        }
-
-        // 주문을 한 적이 있던 경우
-
-        public Seats(int seatNum, List<Order> seatOrders,Seat seat, List<Food> menus)
-        {
-            InitializeComponent();
-            this.seatOrders = seatOrders;
             this.seat = seat;
-            this.menus = menus;
-            SeatSet(seatNum);
-            SeatOrderSet();
+            SeatSet(seat.SeatNum);
+
+            // 주문을 한 적이 있던 경우
+            if (seat.Orders.Count >= 0)
+            {
+                SeatOrderSet();
+            }
         }
 
         private void SeatsLoad(object sender, EventArgs e)
         {
             MenuSet();
             OrderListSetting();
+            SetTime();
+            ImagePathSet();
         }
 
-        private void SetTimer()
+        private void ImagePathSet()
         {
-            timer = new Timer();
-            timer.Interval = 1000;
-            timer.Tick += new EventHandler(timerTick);
+            string[] path = rootPath.Split('\\');
 
-            timer.Start();
+            foreach (string temp in path)
+            {
+                defaultImage += String.Format("{0}\\", temp);
+                if (temp.Equals("PCCafeManagementProgram"))
+                {
+                    break;
+                }
+            }
+            defaultImage += "resources\\image\\default.png";
         }
 
-        private void timerTick(object sender, EventArgs e)
+        private void SetTime()
         {
+            SetTimeText();
+            clock = new System.Windows.Forms.Timer();
+            clock.Interval = 1000;
+            clock.Tick += new EventHandler(TickTock);
 
+            clock.Start();
         }
 
+        private void TickTock(object sender, EventArgs e)
+        {
+            now = now.AddSeconds(1);
+            SetTimeText();
+        }
+
+        private void SetTimeText()
+        {
+            orderTime.Text = now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
         private void SeatOrderSet()
         {
-            foreach (Order seatOrder in SeatOrders)
+            foreach (Order order in seat.Orders)
             {
-                OrderListAdd(seatOrder);
-                TempTotalPrice += seatOrder.GetPayMoney();
+                OrderListAdd(order);
             }
             SetPayMethod(seat.PayMethod);
-            SetPayPrice(seat.PayPrice);
+            SetPayPrice();
             TotalPriceReload();
         }
 
-        private void SetPayPrice(int payPrice)
+        private void SetPayPrice()
         {
-            if (payPrice != 0) 
+            if (seat.PayPriceCheck() != -1) 
             {
-                this.payPrice.SelectedIndex = this.payPrice.FindString(payPrice.ToString());
+                payPrice.SelectedIndex = payPrice.FindString(seat.PayPrice);
             } else
             {
-                this.payPrice.SelectedIndex = 4;
+                payPrice.SelectedIndex = 4;
             }
             return;
         }
 
         private void TotalPriceSet()
         {
-            totalPrice.Text = TempTotalPrice.ToString();
+            totalPrice.Text = seat.TotalPrice.ToString();
         }
 
         private void OrderListSetting()
@@ -124,8 +129,7 @@ namespace WindowsFormsApp1
 
         private void SeatSet(int seatNum)
         {
-            this.SeatNum = seatNum;
-            this.seatNumText.Text = this.SeatNum.ToString();
+            this.seatNumText.Text = this.seat.SeatNum.ToString();
         }
 
         private void MenuSet()
@@ -229,7 +233,7 @@ namespace WindowsFormsApp1
                                                 MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
-                    // cancel the closure of the form.
+                    seat.DefaultSet();
                     return;
                 }
                 e.Cancel = true;
@@ -240,7 +244,7 @@ namespace WindowsFormsApp1
         {
             // 이미 주문을 한 상태이면
 
-            foreach (Order seatOrder in SeatOrders)
+            foreach (Order seatOrder in seat.Orders)
             {
                 if (seatOrder.Name.Equals(menuName))
                 {
@@ -254,15 +258,15 @@ namespace WindowsFormsApp1
         private void AddOrder(Food selectedFood)
         {
             Order newOrder = new Order(selectedFood.Name, selectedFood.Price, DateTime.Now, selectedFood.Category_.ToString());
-            SeatOrders.Add(newOrder);
+            seat.Orders.Add(newOrder);
             OrderListAdd(newOrder);
-            TempTotalPrice += newOrder.Price;
+            seat.TotalPrice += newOrder.Price;
             TotalPriceReload();
         }
 
         private void TotalPriceReload()
         {
-            totalPrice.Text = TempTotalPrice.ToString();
+            totalPrice.Text = seat.TotalPrice.ToString();
         }
 
         private void OrderListAdd(Order order)
@@ -300,14 +304,14 @@ namespace WindowsFormsApp1
 
             string selectedMenuName = orderList.SelectedItems[0].Text;
 
-            foreach (Order order in SeatOrders)
+            foreach (Order order in seat.Orders)
             {
                 if (order.Name.Equals(selectedMenuName))
                 {
                     if (op.Text.Equals("+"))
                     {
                         order.Count += 1;
-                        TempTotalPrice += order.Price;
+                        seat.TotalPrice += order.Price;
                         TotalPriceReload();
                     }
                     else
@@ -315,12 +319,12 @@ namespace WindowsFormsApp1
                         if (order.Count == 1)
                         {
                             OrderListRemove(order);
-                            TempTotalPrice -= order.Price;
+                            seat.TotalPrice -= order.Price;
                             TotalPriceReload();
                             return;
                         }
                         order.Count -= 1;
-                        TempTotalPrice -= order.Price;
+                        seat.TotalPrice -= order.Price;
                         TotalPriceReload();
                     }
                     OrderListSet(order);
@@ -336,7 +340,7 @@ namespace WindowsFormsApp1
 
         private void OrderListRemove(Order order)
         {
-            SeatOrders.Remove(order);
+            seat.Orders.Remove(order);
             foreach (ListViewItem eachItem in orderList.SelectedItems)
             {
                 orderList.Items.Remove(eachItem);
@@ -354,7 +358,7 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void foodImageSet(string menuName)
+        private void FoodImageSet(string menuName)
         {
             foreach(Food menu in menus)
             {
@@ -376,7 +380,7 @@ namespace WindowsFormsApp1
             if (selected)
             {
                 EnableOperators();
-                foodImageSet(orderList.SelectedItems[0].Text);
+                FoodImageSet(orderList.SelectedItems[0].Text);
             }
             else
             {
@@ -408,57 +412,19 @@ namespace WindowsFormsApp1
 
         private void ResetClick(object sender, EventArgs e)
         {
-            SeatOrders.Clear();
+            seat.Orders.Clear();
             orderList.Items.Clear();
             SetDefaultImage();
-            TempTotalPrice = 0;
+            seat.TotalPrice = 0;
             TotalPriceReload();
         }
-
-        private void SeatsClone()
-        {
-            tempSeats = new Seats(seatNum, menus);
-            tempSeats.tempPayMethod = this.GetPayMethod();
-            tempSeats.SeatOrders = this.SeatOrders;
-            tempSeats.seat = this.seat;
-            tempSeats.tempTotalPrice = this.tempTotalPrice;
-            tempSeats.TempPayPrice = payPrice.SelectedItem as string;
-        }
-
-        //private void SubmitClick(object sender, EventArgs e)
-        //{
-        //    if(IsValidRequest())
-        //    {
-        //        return;
-        //    }
-
-        //    int intPayPrice;
-        //    string payMethod = "";
-        //    Loading.Main.SeatOrders[SeatNum - 1] = seatOrders;
-
-        //    payMethod = GetPayMethod();
-        //    if (int.TryParse(payPrice.SelectedItem as string, out intPayPrice))
-        //    {
-        //        Loading.Main.SeatOrderSet(SeatNum, TempTotalPrice, intPayPrice, payMethod);
-        //    }
-        //    else
-        //    {
-        //        Loading.Main.SeatOrderSet(SeatNum, TempTotalPrice, payPrice.SelectedItem as string, payMethod);
-        //    }
-        //    MessageBox.Show("주문이 되었습니다", "주문 성공",
-        //    MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
-
-        //    Hide();
-        //    Loading.Main.Show();
-        //}
 
         private void SubmitClick(object sender, EventArgs e)
         {
             if (IsValidRequest())
             {
-                SeatsClone();
-
-                SubmitRequest(tempSeats);
+                SeatClone();
+                SubmitRequest(seat);
                 MessageBox.Show("주문이 되었습니다", "주문 성공",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
 
@@ -514,7 +480,7 @@ namespace WindowsFormsApp1
             }
             else if (int.TryParse(payPrice.SelectedItem as string, out temp)) // 지불 금액이 숫자일 때
             {
-                if(temp < TempTotalPrice)
+                if(temp < seat.TotalPrice)
                 {
                     MessageBox.Show("지불 금액이 총 금액보다 적습니다", "주문 실패",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
@@ -535,9 +501,9 @@ namespace WindowsFormsApp1
             string message = "";
             int i = 0;
 
-            foreach (Order seatOrder in SeatOrders)
+            foreach (Order order in seat.Orders)
             {
-                message += String.Format("{0} x {1} = {2}\n",seatOrder.Name, seatOrder.Count, seatOrder.GetPayMoney());
+                message += String.Format("{0} x {1} = {2}\n",order.Name, order.Count, order.GetPayMoney());
 
                 if(++i > 5)
                 {
@@ -548,6 +514,12 @@ namespace WindowsFormsApp1
             message += "\n결제하시겠습니까?";
 
             return message;
+        }
+
+        private void SeatClone()
+        {
+            seat.PayMethod = GetPayMethod();
+            seat.PayPrice = payPrice.SelectedItem.ToString();
         }
 
         private void PayClick(object sender, EventArgs e)
@@ -567,9 +539,9 @@ namespace WindowsFormsApp1
                 if (IsValidRequest())
                 {
                     isSubmited = true;
-                    SeatsClone();
                     Close();
-                    PayRequest(tempSeats);
+                    SeatClone();
+                    PayRequest(seat);
                 }
             }
         }

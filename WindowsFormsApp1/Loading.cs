@@ -39,7 +39,7 @@ namespace WindowsFormsApp1
         {
             loadingBar.PerformStep();
 
-            if(++timerCount == 24)
+            if(++timerCount >= 22)
             {
                 timer.Stop();
                 Close();

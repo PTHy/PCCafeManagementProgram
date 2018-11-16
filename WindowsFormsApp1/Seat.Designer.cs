@@ -30,58 +30,59 @@ namespace WindowsFormsApp1
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableNumber = new System.Windows.Forms.Label();
+            this.seatNumText = new System.Windows.Forms.Label();
             this.orderText = new System.Windows.Forms.Label();
             this.payPriceText = new System.Windows.Forms.Label();
             this.totalPriceText = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // tableNumber
+            // seatNumText
             // 
-            this.tableNumber.AutoSize = true;
-            this.tableNumber.Location = new System.Drawing.Point(0, 0);
-            this.tableNumber.Name = "tableNumber";
-            this.tableNumber.Size = new System.Drawing.Size(86, 15);
-            this.tableNumber.TabIndex = 0;
-            this.tableNumber.Text = "tableNumber";
+            this.seatNumText.AutoSize = true;
+            this.seatNumText.Location = new System.Drawing.Point(0, 0);
+            this.seatNumText.Name = "seatNumText";
+            this.seatNumText.Size = new System.Drawing.Size(77, 12);
+            this.seatNumText.TabIndex = 0;
+            this.seatNumText.Text = "tableNumber";
             // 
             // orderText
             // 
             this.orderText.AutoSize = true;
             this.orderText.Font = new System.Drawing.Font("굴림", 8F);
-            this.orderText.Location = new System.Drawing.Point(15, 26);
+            this.orderText.Location = new System.Drawing.Point(13, 21);
             this.orderText.Name = "orderText";
-            this.orderText.Size = new System.Drawing.Size(0, 14);
+            this.orderText.Size = new System.Drawing.Size(0, 11);
             this.orderText.TabIndex = 0;
             // 
             // payPriceText
             // 
             this.payPriceText.AutoSize = true;
-            this.payPriceText.Location = new System.Drawing.Point(15, 100);
+            this.payPriceText.Location = new System.Drawing.Point(13, 80);
             this.payPriceText.Name = "payPriceText";
-            this.payPriceText.Size = new System.Drawing.Size(0, 15);
+            this.payPriceText.Size = new System.Drawing.Size(0, 12);
             this.payPriceText.TabIndex = 1;
             // 
             // totalPriceText
             // 
             this.totalPriceText.AutoSize = true;
-            this.totalPriceText.Location = new System.Drawing.Point(15, 115);
+            this.totalPriceText.Location = new System.Drawing.Point(13, 92);
             this.totalPriceText.Name = "totalPriceText";
-            this.totalPriceText.Size = new System.Drawing.Size(0, 15);
+            this.totalPriceText.Size = new System.Drawing.Size(0, 12);
             this.totalPriceText.TabIndex = 2;
             // 
             // Seat
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Controls.Add(this.totalPriceText);
             this.Controls.Add(this.payPriceText);
             this.Controls.Add(this.orderText);
-            this.Controls.Add(this.tableNumber);
+            this.Controls.Add(this.seatNumText);
             this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Seat";
-            this.Size = new System.Drawing.Size(200, 139);
+            this.Size = new System.Drawing.Size(175, 111);
             this.Load += new System.EventHandler(this.Seat_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -90,11 +91,11 @@ namespace WindowsFormsApp1
 
         #endregion
 
-        private System.Windows.Forms.Label tableNumber;
+        private System.Windows.Forms.Label seatNumText;
         private Label orderText;
         private Label payPriceText;
         private Label totalPriceText;
 
-        public Label TableNumber { get => tableNumber; set => tableNumber = value; }
+        public Label TableNumber { get => seatNumText; set => seatNumText = value; }
     }
 }

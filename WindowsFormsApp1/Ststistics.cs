@@ -107,8 +107,7 @@ namespace WindowsFormsApp1
         {
             try
             {
-                query = "SELECT pay_log.pay_method as pay_method,SUM(count) as count, SUM(price) as price, pay_log.pay_date as pay_date FROM pay_log JOIN pay_log_detail ON pay_log.idx = pay_log_detail.pay_log_idx JOIN menus ON pay_log_detail.menu = menus.idx GROUP BY pay_log.pay_method";
-                query += DayQuery();
+                query = String.Format("SELECT pay_method,SUM(count) as count, SUM(price) as price,pay_date FROM  (SELECT pay_method,pay_date,count,price,name,category FROM pay_log JOIN pay_log_detail ON pay_log.idx = pay_log_detail.pay_log_idx JOIN menus ON pay_log_detail.menu = menus.idx {0})TEMP GROUP BY pay_method;",DayQuery());
                 scom.CommandText = query;
                 sdr = scom.ExecuteReader();
                 
@@ -129,13 +128,16 @@ namespace WindowsFormsApp1
             }
             finally
             {
-                sdr.Close();
+                if (sdr != null)
+                {
+                    sdr.Close();
+                }
             }
         }
 
         private string DayQuery()
         {
-            return String.Format(" HAVING pay_log.pay_date >= '{0}'  AND pay_log.pay_date <= '{1}';", selectedDate.AddDays(-1).ToString("yyyy-MM-dd"), selectedDate.ToString("yyyy-MM-dd"));
+            return String.Format("WHERE pay_log.pay_date >= '{0} 00:00:00' AND pay_log.pay_date <= '{1} 24:00:00'", selectedDate.ToString("yyyy-MM-dd"), selectedDate.ToString("yyyy-MM-dd"));
         }
 
         private string GetCategoryName(string category)
@@ -165,8 +167,7 @@ namespace WindowsFormsApp1
         {
             try
             {
-                query = "SELECT menus.category as category, SUM(count) as count, SUM(price) as price, pay_log.pay_date as pay_date FROM pay_log JOIN pay_log_detail ON pay_log.idx = pay_log_detail.pay_log_idx JOIN menus ON pay_log_detail.menu = menus.idx GROUP BY menus.category";
-                query += DayQuery();
+                query = String.Format("SELECT category, SUM(count) as count, SUM(price) as price, pay_date FROM (SELECT pay_method,pay_date,count,price,name,category FROM pay_log JOIN pay_log_detail ON pay_log.idx = pay_log_detail.pay_log_idx JOIN menus ON pay_log_detail.menu = menus.idx {0})TEMP GROUP BY category;",DayQuery());
                 scom.CommandText = query;
                 sdr = scom.ExecuteReader();
                 this.categoryStst.BeginUpdate();
@@ -186,7 +187,10 @@ namespace WindowsFormsApp1
             }
             finally
             {
-                sdr.Close();
+                if(sdr != null)
+                {
+                    sdr.Close();
+                }
             }
         }
 
@@ -194,8 +198,7 @@ namespace WindowsFormsApp1
         {
             try
             {
-                query = "SELECT menus.name as name, SUM(count) as count, SUM(price) as price, pay_log.pay_date as pay_date FROM pay_log JOIN pay_log_detail ON pay_log.idx = pay_log_detail.pay_log_idx JOIN menus ON pay_log_detail.menu = menus.idx GROUP BY menus.name";
-                query += DayQuery();
+                query = String.Format("SELECT name, SUM(count) as count, SUM(price) as price, pay_date FROM  (SELECT pay_method,pay_date,count,price,name,category FROM pay_log JOIN pay_log_detail ON pay_log.idx = pay_log_detail.pay_log_idx JOIN menus ON pay_log_detail.menu = menus.idx {0})TEMP GROUP BY name;",DayQuery());
                 scom.CommandText = query;
                 sdr = scom.ExecuteReader();
 
@@ -217,7 +220,10 @@ namespace WindowsFormsApp1
             }
             finally
             {
-                sdr.Close();
+                if (sdr != null)
+                {
+                    sdr.Close();
+                }
             }
         }
 

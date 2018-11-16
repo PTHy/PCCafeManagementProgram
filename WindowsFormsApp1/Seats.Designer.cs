@@ -222,7 +222,6 @@ namespace WindowsFormsApp1
             // 
             this.tbMenus.AutoScroll = true;
             this.tbMenus.AutoSize = true;
-            this.tbMenus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tbMenus.Location = new System.Drawing.Point(0, 0);
             this.tbMenus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbMenus.Name = "tbMenus";
