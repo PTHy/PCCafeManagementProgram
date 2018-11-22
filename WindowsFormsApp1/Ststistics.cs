@@ -16,24 +16,17 @@ namespace WindowsFormsApp1
         const int STST_CATEGORIZE_SIZE = 150;
         const int STST_COUNT_SIZE = 75;
         const int STST_PRICE_SIZE = 75;
-        MySqlCommand scom = null;
-        MySqlDataReader sdr = null;
         DateTime selectedDate = DateTime.Now;
         List <Log> Logs = new List<Log> { };
         int totalPrice = 0;
+        private DatabaseManager dm = new DatabaseManager();
         string query;
 
-        public Ststistics(MySqlCommand scom)
+        public Ststistics()
         {
             InitializeComponent();
-            DatabaseSetting(scom);
             StartStst();
             SetStst();
-        }
-
-        private void DatabaseSetting(MySqlCommand scom)
-        {
-            this.scom = scom;
         }
 
         private void StartStst()
@@ -105,19 +98,22 @@ namespace WindowsFormsApp1
 
         private void SetPayMethodStst()
         {
+            DataSet ds;
+
             try
             {
                 query = String.Format("SELECT pay_method,SUM(count) as count, SUM(price) as price,pay_date FROM  (SELECT pay_method,pay_date,count,price,name,category FROM pay_log JOIN pay_log_detail ON pay_log.idx = pay_log_detail.pay_log_idx JOIN menus ON pay_log_detail.menu = menus.idx {0})TEMP GROUP BY pay_method;",DayQuery());
-                scom.CommandText = query;
-                sdr = scom.ExecuteReader();
+                ds = dm.Select(query);
                 
                 this.payMethodStst.BeginUpdate();
-                while (sdr.Read())
+
+                foreach (DataRow r in ds.Tables[0].Rows)
                 {
-                    ListViewItem lvi = new ListViewItem(sdr["pay_method"].ToString());
-                    lvi.SubItems.Add(sdr["count"].ToString());
-                    lvi.SubItems.Add(sdr["price"].ToString());
+                    ListViewItem lvi = new ListViewItem(r["pay_method"].ToString());
+                    lvi.SubItems.Add(r["count"].ToString());
+                    lvi.SubItems.Add(r["price"].ToString());
                     this.payMethodStst.Items.Add(lvi);
+
                 }
                 this.payMethodStst.EndUpdate();
             }
@@ -125,13 +121,6 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show("통계 불러오기에 실패하였습니다\n" + error.Message, "통계 불러오기 실패",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
-            }
-            finally
-            {
-                if (sdr != null)
-                {
-                    sdr.Close();
-                }
             }
         }
 
@@ -165,18 +154,20 @@ namespace WindowsFormsApp1
 
         private void SetCategoryStst()
         {
+            DataSet ds;
             try
             {
                 query = String.Format("SELECT category, SUM(count) as count, SUM(price) as price, pay_date FROM (SELECT pay_method,pay_date,count,price,name,category FROM pay_log JOIN pay_log_detail ON pay_log.idx = pay_log_detail.pay_log_idx JOIN menus ON pay_log_detail.menu = menus.idx {0})TEMP GROUP BY category;",DayQuery());
-                scom.CommandText = query;
-                sdr = scom.ExecuteReader();
+                ds = dm.Select(query);
                 this.categoryStst.BeginUpdate();
-                while (sdr.Read())
+
+                foreach (DataRow r in ds.Tables[0].Rows)
                 {
-                    ListViewItem lvi = new ListViewItem(GetCategoryName(sdr["category"].ToString()));
-                    lvi.SubItems.Add(sdr["count"].ToString());
-                    lvi.SubItems.Add(sdr["price"].ToString());
+                    ListViewItem lvi = new ListViewItem(GetCategoryName(r["category"].ToString()));
+                    lvi.SubItems.Add(r["count"].ToString());
+                    lvi.SubItems.Add(r["price"].ToString());
                     this.categoryStst.Items.Add(lvi);
+
                 }
                 this.categoryStst.EndUpdate();
             }
@@ -185,31 +176,26 @@ namespace WindowsFormsApp1
                 MessageBox.Show("통계 불러오기에 실패하였습니다\n" + error.Message, "통계 불러오기 실패",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
             }
-            finally
-            {
-                if(sdr != null)
-                {
-                    sdr.Close();
-                }
-            }
         }
 
         private void SetMenuStst()
         {
+            DataSet ds;
             try
             {
                 query = String.Format("SELECT name, SUM(count) as count, SUM(price) as price, pay_date FROM  (SELECT pay_method,pay_date,count,price,name,category FROM pay_log JOIN pay_log_detail ON pay_log.idx = pay_log_detail.pay_log_idx JOIN menus ON pay_log_detail.menu = menus.idx {0})TEMP GROUP BY name;",DayQuery());
-                scom.CommandText = query;
-                sdr = scom.ExecuteReader();
+                ds = dm.Select(query);
 
                 this.menuStst.BeginUpdate();
-                while (sdr.Read())
+
+                foreach (DataRow r in ds.Tables[0].Rows)
                 {
-                    ListViewItem lvi = new ListViewItem(sdr["name"].ToString());
-                    lvi.SubItems.Add(sdr["count"].ToString());
-                    lvi.SubItems.Add(sdr["price"].ToString());
-                    totalPrice += Int32.Parse(sdr["price"].ToString());
+                    ListViewItem lvi = new ListViewItem(r["name"].ToString());
+                    lvi.SubItems.Add(r["count"].ToString());
+                    lvi.SubItems.Add(r["price"].ToString());
+                    totalPrice += Int32.Parse(r["price"].ToString());
                     this.menuStst.Items.Add(lvi);
+
                 }
                 this.menuStst.EndUpdate();
             }
@@ -217,13 +203,6 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show("메뉴 불러오기에 실패하였습니다\n" + error.Message, "메뉴 불러오기 실패",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
-            }
-            finally
-            {
-                if (sdr != null)
-                {
-                    sdr.Close();
-                }
             }
         }
 

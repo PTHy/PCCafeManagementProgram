@@ -49,6 +49,7 @@ namespace WindowsFormsApp1
 
         public void SeatOrderSet()
         {
+            TextDefaultSet();
             int cnt = 0;
             string orderText = "";
             foreach (Order order in orders)
@@ -71,10 +72,15 @@ namespace WindowsFormsApp1
             totalPrice = 0;
             PayPrice = "";
             payMethod = "";
+            orders.Clear();
+            TextDefaultSet();
+        }
+
+        private void TextDefaultSet()
+        {
             orderText.Text = "";
             totalPriceText.Text = "";
             payPriceText.Text = "";
-            orders.Clear();
         }
 
         public int PayPriceCheck()

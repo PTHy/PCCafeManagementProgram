@@ -13,7 +13,6 @@ namespace WindowsFormsApp1
         private string image;
         private string barcode;
         private Category category;
-        private string category1;
 
         public int Price { get => price; set => price = value; }
         public string Name { get => name; set => name = value; }

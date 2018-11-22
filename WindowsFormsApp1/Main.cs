@@ -19,7 +19,6 @@ namespace WindowsFormsApp1
 
     public partial class Main : Form
     {
-        const string databaseConfig = "server=localhost;user id=root;password=password;persistsecurityinfo=True;port=3306;database=restaurant;SslMode=none;CharSet=utf8";
         const int MAX_TABLE_SIZE = 9;
         const int MAX_TABLE_WIDTH = 3;
         const int MAX_TABLE_HEIGHT = MAX_TABLE_SIZE / MAX_TABLE_WIDTH + (MAX_TABLE_SIZE % MAX_TABLE_WIDTH == 0 ? 0 : 1);
@@ -28,10 +27,8 @@ namespace WindowsFormsApp1
         private string rootPath = Application.StartupPath;
         private string imagePath = "";
         string query;
+        DatabaseManager dm = new DatabaseManager();
         private DateTime now = DateTime.Now;
-        MySqlConnection scon = null;
-        MySqlCommand scom = null;
-        MySqlDataReader sdr = null;
         List<Food> menus = new List<Food>();
         Seat[] seats = new Seat[MAX_TABLE_SIZE];
         private System.Windows.Forms.Timer clock;
@@ -48,7 +45,6 @@ namespace WindowsFormsApp1
         {
             Loading();
             ImagePathSet();
-            DatabaseConnecting();
             SetTime();
             MenuLoad();
             CreateTables();
@@ -208,45 +204,26 @@ namespace WindowsFormsApp1
             od.SubmitRequest = new DataGetEventHandler(this.SubmitRequest);
             od.ShowDialog();
         }
-
-        private void DatabaseConnecting()
-        {
-            try
-            {
-                scon = new MySqlConnection(databaseConfig);
-                scon.Open();
-                scom = new MySqlCommand();
-                scom.Connection = scon;
-            } catch (Exception error)
-            {
-                MessageBox.Show("DB 연결에 실패하였습니다\n"+error.Message, "DB 연결 실패",
-                MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
-            }
-        }
         private void MenuLoad()
         {
+            DataSet ds;
             try
             {
                 query = "SELECT * FROM menus";
-                scom.CommandText = query;
-                sdr = scom.ExecuteReader();
-
-                while (sdr.Read())
+                ds = dm.Select(query);
+                foreach (DataRow r in ds.Tables[0].Rows)
                 {
-                    int price = int.Parse(sdr["price"].ToString());
-                    string name = sdr["name"].ToString();
-                    string image = ImagePath + name+".jpg";
-                    string category = sdr["category"].ToString();
-                    string barcode = sdr["barcode"].ToString();
-                    menus.Add(new Food(price, name, image, category,barcode));
+                    int price = int.Parse(r["price"].ToString());
+                    string name = r["name"].ToString();
+                    string image = ImagePath + name + ".jpg";
+                    string category = r["category"].ToString();
+                    string barcode = r["barcode"].ToString();
+                    menus.Add(new Food(price, name, image, category, barcode));    
                 }
             } catch (Exception error)
             {
                 MessageBox.Show("메뉴 불러오기에 실패하였습니다\n"+error.Message, "메뉴 불러오기 실패",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
-            } finally
-            {
-                sdr.Close();
             }
         }
 
@@ -255,10 +232,8 @@ namespace WindowsFormsApp1
             try
             {
                 query = String.Format("INSERT INTO pay_log (table_idx, total_price, pay_method) VALUES ({0}, {1}, '{2}');", seat.SeatNum, seat.TotalPrice, seat.PayMethod);
-                scom.CommandText = query;
-                scom.ExecuteNonQuery();
 
-                long lastIdx = scom.LastInsertedId;
+                long lastIdx = dm.Insert(query);
 
                 foreach(Order order in seats[seat.SeatNum - 1].Orders)
                 {
@@ -280,8 +255,7 @@ namespace WindowsFormsApp1
             try
             {
                 query = String.Format("INSERT INTO pay_log_detail (pay_log_idx, menu, count) VALUES ({0}, (SELECT idx FROM menus WHERE name LIKE '{1}'), {2});", lastIdx, order.Name, order.Count);
-                scom.CommandText = query;
-                scom.ExecuteNonQuery();
+                dm.Insert(query);
             }
             catch (Exception error)
             {
@@ -298,7 +272,7 @@ namespace WindowsFormsApp1
         private void statisticsClick(object sender, EventArgs e)
         {
             this.Hide();
-            Ststistics st = new Ststistics(scom);
+            Ststistics st = new Ststistics();
             st.Closed += (s, args) => { Show(); };
             st.ShowDialog();
         }
